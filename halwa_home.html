@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Halwa — Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --primary-50:#fdf8f0;--primary-100:#f5e6cc;--primary-200:#ecd099;--primary-300:#e0b96b;
+  --primary-400:#d4a24a;--primary-500:#C8A97A;--primary-600:#a07840;--primary-700:#7d5a28;
+  --primary-800:#5a3e18;--primary-900:#3a250a;
+  --neutral-50:#fafafa;--neutral-100:#f5f5f5;--neutral-200:#e8e8e8;--neutral-300:#d4d4d4;
+  --neutral-400:#a3a3a3;--neutral-500:#737373;--neutral-600:#525252;--neutral-700:#404040;
+  --neutral-800:#262626;--neutral-900:#171717;
+  --green-50:#f0fdf4;--green-100:#dcfce7;--green-500:#22c55e;--green-600:#16a34a;--green-700:#15803d;
+  --red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--red-700:#b91c1c;
+  --orange-50:#fff7ed;--orange-100:#ffedd5;--orange-500:#f97316;--orange-600:#ea580c;
+  --blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;
+  --font:'Plus Jakarta Sans',sans-serif;
+  --radius-sm:8px;--radius-md:12px;--radius-lg:16px;
+}
+body{font-family:var(--font);background:#111;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:2rem 0;}
+.phone{width:390px;height:844px;background:#f5f5f3;border-radius:44px;overflow:hidden;position:relative;border:8px solid #1a1a1a;box-shadow:0 30px 80px rgba(0,0,0,0.6);}
+.screen{width:100%;height:100%;position:relative;overflow:hidden;}
+.page{position:absolute;top:0;left:0;width:100%;height:100%;background:#f5f5f3;display:none;flex-direction:column;}
+.page.active{display:flex;}
+.scroll-area{flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;padding-bottom:90px;}
+.scroll-area::-webkit-scrollbar{display:none;}
+.topbar{background:#f5f5f3;padding:52px 20px 14px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;flex-shrink:0;}
+.topbar-title{font-size:20px;font-weight:600;color:var(--neutral-900);}
+.topbar-sub{font-size:13px;color:var(--neutral-400);margin-top:1px;}
+.topbar-right{display:flex;align-items:center;gap:10px;}
+.icon-btn{width:38px;height:38px;border-radius:50%;background:#fff;border:0.5px solid var(--neutral-200);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;position:relative;}
+.notif-dot{position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:var(--red-500);border:2px solid #f5f5f3;}
+.avatar-btn{width:38px;height:38px;border-radius:50%;background:var(--primary-300);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--primary-800);cursor:pointer;}
+.navbar{position:absolute;bottom:0;left:0;right:0;background:#fff;border-top:0.5px solid var(--neutral-200);display:flex;padding:10px 0 24px;z-index:10;}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;}
+.nav-label{font-size:10px;font-weight:500;color:var(--neutral-400);font-family:var(--font);}
+.nav-label.active{color:var(--primary-600);}
+.section{padding:0 20px;margin-bottom:24px;}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.section-title{font-size:15px;font-weight:600;color:var(--neutral-900);display:flex;align-items:center;gap:8px;}
+.section-title::before{content:'';display:block;width:12px;height:3px;background:var(--primary-500);border-radius:2px;}
+.see-all{font-size:12px;font-weight:500;color:var(--primary-600);cursor:pointer;display:flex;align-items:center;gap:2px;}
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.kpi-card{background:#fff;border-radius:var(--radius-lg);padding:14px;border:0.5px solid var(--neutral-200);}
+.kpi-label{font-size:12px;color:var(--neutral-400);font-weight:400;margin-bottom:4px;}
+.kpi-value{font-size:22px;font-weight:600;color:var(--neutral-900);}
+.kpi-unit{font-size:12px;font-weight:400;color:var(--neutral-400);margin-left:2px;}
+.badge-row{display:flex;align-items:center;gap:6px;margin-top:10px;}
+.badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;display:flex;align-items:center;gap:3px;}
+.badge.up{background:var(--green-100);color:var(--green-700);}
+.badge.down{background:var(--red-100);color:var(--red-700);}
+.badge.warn{background:var(--orange-100);color:var(--orange-600);}
+.badge.info{background:var(--blue-100);color:var(--blue-600);}
+.badge.neutral{background:var(--neutral-100);color:var(--neutral-600);}
+.badge-sub{font-size:11px;color:var(--neutral-400);}
+.alert-card{background:var(--orange-50);border:0.5px solid rgba(249,115,22,0.2);border-left:3px solid var(--orange-500);border-radius:var(--radius-md);padding:12px 14px;display:flex;align-items:center;gap:10px;margin-bottom:8px;cursor:pointer;transition:opacity .15s;}
+.alert-card:active{opacity:.7;}
+.alert-card.danger{background:var(--red-50);border-color:rgba(239,68,68,0.2);border-left-color:var(--red-500);}
+.alert-content{flex:1;}
+.alert-title{font-size:13px;font-weight:600;color:var(--neutral-900);}
+.alert-sub{font-size:11px;color:var(--neutral-500);margin-top:2px;}
+.dismiss-btn{width:20px;height:20px;border-radius:50%;background:var(--neutral-100);display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;}
+.quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.quick-item{background:#fff;border-radius:var(--radius-md);border:0.5px solid var(--neutral-200);padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:background .12s;}
+.quick-item:active{background:var(--neutral-100);}
+.quick-icon{width:38px;height:38px;border-radius:10px;background:var(--primary-50);display:flex;align-items:center;justify-content:center;}
+.quick-label{font-size:11px;font-weight:500;color:var(--neutral-700);text-align:center;line-height:1.3;}
+.h-scroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
+.h-scroll::-webkit-scrollbar{display:none;}
+.order-card{background:#fff;border-radius:var(--radius-lg);border:0.5px solid var(--neutral-200);padding:14px;min-width:158px;flex-shrink:0;cursor:pointer;}
+.order-id{font-size:11px;color:var(--neutral-400);margin-bottom:4px;}
+.order-name{font-size:13px;font-weight:600;color:var(--neutral-900);margin-bottom:10px;line-height:1.3;}
+.order-footer{display:flex;align-items:center;justify-content:space-between;}
+.status-pill{font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;}
+.status-pill.pending{background:var(--orange-100);color:var(--orange-600);}
+.status-pill.progress{background:var(--blue-100);color:var(--blue-600);}
+.status-pill.done{background:var(--green-100);color:var(--green-700);}
+.order-date{font-size:11px;color:var(--neutral-400);}
+.activity-list{background:#fff;border-radius:var(--radius-lg);border:0.5px solid var(--neutral-200);padding:4px 16px;}
+.activity-item{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:0.5px solid var(--neutral-100);cursor:pointer;}
+.activity-item:last-child{border-bottom:none;}
+.act-dot{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.act-text{flex:1;}
+.act-title{font-size:13px;font-weight:500;color:var(--neutral-900);line-height:1.4;}
+.act-time{font-size:11px;color:var(--neutral-400);margin-top:2px;}
+/* OVERLAY / PANEL / MODAL */
+.overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0);z-index:20;pointer-events:none;transition:background .3s;}
+.overlay.open{background:rgba(0,0,0,0.4);pointer-events:all;}
+.panel{position:absolute;top:0;right:-270px;width:270px;height:100%;background:#fff;z-index:30;border-left:1px solid rgba(200,169,122,0.3);transition:right .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;}
+.panel.open{right:0;}
+.panel-header{padding:56px 20px 20px;border-bottom:0.5px solid var(--neutral-100);}
+.panel-avatar{width:54px;height:54px;border-radius:50%;background:var(--primary-300);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;color:var(--primary-800);margin-bottom:10px;}
+.panel-name{font-size:16px;font-weight:600;color:var(--neutral-900);}
+.panel-role-txt{font-size:12px;color:var(--neutral-400);margin-top:2px;}
+.panel-badge{margin-top:8px;display:inline-flex;padding:3px 10px;border-radius:999px;background:var(--primary-100);font-size:11px;font-weight:600;color:var(--primary-700);}
+.panel-section{padding:8px 0;border-bottom:0.5px solid var(--neutral-100);}
+.panel-item{display:flex;align-items:center;gap:12px;padding:11px 20px;cursor:pointer;}
+.panel-item:hover{background:var(--neutral-50);}
+.panel-item-icon{width:32px;height:32px;border-radius:9px;background:var(--neutral-100);display:flex;align-items:center;justify-content:center;}
+.panel-item-label{font-size:14px;font-weight:500;color:var(--neutral-900);}
+.panel-logout{padding:16px 20px;margin-top:auto;}
+.close-x{position:absolute;top:54px;right:16px;width:28px;height:28px;border-radius:50%;background:var(--neutral-100);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+/* MODAL SHEET */
+.modal-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0);z-index:40;pointer-events:none;transition:background .3s;display:flex;align-items:flex-end;}
+.modal-overlay.open{background:rgba(0,0,0,0.5);pointer-events:all;}
+.modal-sheet{background:#fff;border-radius:20px 20px 0 0;width:100%;transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);max-height:90%;overflow-y:auto;scrollbar-width:none;}
+.modal-sheet::-webkit-scrollbar{display:none;}
+.modal-overlay.open .modal-sheet{transform:translateY(0);}
+.modal-handle{width:36px;height:4px;border-radius:2px;background:var(--neutral-200);margin:12px auto 0;}
+.modal-title{font-size:17px;font-weight:600;color:var(--neutral-900);padding:16px 20px 0;}
+.modal-sub{font-size:13px;color:var(--neutral-400);padding:4px 20px 16px;border-bottom:0.5px solid var(--neutral-100);}
+.modal-body{padding:20px;}
+.field{margin-bottom:16px;}
+.field-label{font-size:13px;font-weight:500;color:var(--neutral-700);margin-bottom:6px;display:block;}
+.field-input{width:100%;padding:12px 14px;border-radius:var(--radius-md);border:1px solid var(--neutral-200);font-size:14px;font-family:var(--font);color:var(--neutral-900);outline:none;background:#fff;}
+.field-input:focus{border-color:var(--primary-400);}
+.field-select{width:100%;padding:12px 14px;border-radius:var(--radius-md);border:1px solid var(--neutral-200);font-size:14px;font-family:var(--font);color:var(--neutral-900);outline:none;background:#fff;appearance:none;}
+.btn-primary{width:100%;padding:14px;border-radius:var(--radius-lg);background:var(--primary-500);border:none;font-size:15px;font-weight:600;color:#fff;cursor:pointer;font-family:var(--font);}
+.btn-secondary{width:100%;padding:14px;border-radius:var(--radius-lg);background:var(--neutral-100);border:none;font-size:15px;font-weight:600;color:var(--neutral-700);cursor:pointer;font-family:var(--font);margin-top:10px;}
+/* NOTIFICATIONS PANEL */
+.notif-panel{position:absolute;top:0;left:0;width:100%;height:100%;background:#f5f5f3;z-index:35;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;}
+.notif-panel.open{transform:translateX(0);}
+.notif-item{background:#fff;border-radius:var(--radius-md);padding:14px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start;cursor:pointer;}
+.notif-dot-ind{width:8px;height:8px;border-radius:50%;background:var(--primary-500);margin-top:4px;flex-shrink:0;}
+.notif-dot-ind.read{background:transparent;}
+.notif-text{flex:1;}
+.notif-title-txt{font-size:13px;font-weight:600;color:var(--neutral-900);}
+.notif-body{font-size:12px;color:var(--neutral-500);margin-top:3px;line-height:1.5;}
+.notif-time{font-size:11px;color:var(--neutral-400);margin-top:4px;}
+/* SUCCESS TOAST */
+.toast{position:absolute;bottom:100px;left:20px;right:20px;background:var(--neutral-900);color:#fff;border-radius:var(--radius-md);padding:12px 16px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:10px;z-index:50;transform:translateY(20px);opacity:0;transition:all .3s;pointer-events:none;}
+.toast.show{transform:translateY(0);opacity:1;}
+/* EMPTY STATE */
+.empty-state{display:flex;flex-direction:column;align-items:center;padding:40px 20px;text-align:center;}
+.empty-title{font-size:15px;font-weight:600;color:var(--neutral-700);margin-top:16px;}
+.empty-sub{font-size:13px;color:var(--neutral-400);margin-top:6px;line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="phone"><div class="screen">
+
+<!-- ═══ HOME PAGE ═══ -->
+<div class="page active" id="page-home">
+  <div class="topbar">
+    <div><div style="font-size:13px;color:var(--neutral-400);">Welcome back</div><div style="font-size:18px;font-weight:600;color:var(--neutral-900);">Asem</div></div>
+    <div class="topbar-right">
+      <div class="icon-btn" id="notifBtn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--neutral-500)" stroke-width="1.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><div class="notif-dot"></div></div>
+      <div class="avatar-btn" id="avatarBtn">MO</div>
+    </div>
+  </div>
+  <div class="scroll-area">
+    <!-- ALERTS -->
+    <div class="section">
+      <div class="section-header"><div class="section-title">Alerts</div><div class="see-all" id="alertCount">3 active · See all ›</div></div>
+      <div id="alertsList">
+        <div class="alert-card danger" id="alert1">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--red-600)" stroke-width="1.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <div class="alert-content"><div class="alert-title">Low stock — Cocoa powder</div><div class="alert-sub">Only 8 kg remaining · Inventory</div></div>
+          <div class="dismiss-btn" onclick="dismissAlert('alert1')"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="var(--neutral-500)" stroke-width="1.5" stroke-linecap="round"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></div>
+        </div>
+        <div class="alert-card" id="alert2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange-500)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <div class="alert-content"><div class="alert-title">Order #318 due today</div><div class="alert-sub">Awaiting dispatch · Orders</div></div>
+          <div class="dismiss-btn" onclick="dismissAlert('alert2')"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="var(--neutral-500)" stroke-width="1.5" stroke-linecap="round"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></div>
+        </div>
+        <div class="alert-card danger" id="alert3">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--red-600)" stroke-width="1.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <div class="alert-content"><div class="alert-title">Batch #45 behind schedule</div><div class="alert-sub">43% complete — expected 70% · Production</div></div>
+          <div class="dismiss-btn" onclick="dismissAlert('alert3')"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="var(--neutral-500)" stroke-width="1.5" stroke-linecap="round"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></div>
+        </div>
+        <div id="noAlerts" style="display:none;" class="empty-state"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--green-500)" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg><div class="empty-title">All clear!</div><div class="empty-sub">No active alerts right now.</div></div>
+      </div>
+    </div>
+    <!-- QUICK ACTIONS -->
+    <div class="section">
+      <div class="section-header"><div class="section-title">Quick actions</div></div>
+      <div class="quick-grid">
+        <div class="quick-item" onclick="openModal('modal-new-order')"><div class="quick-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--primary-600)" stroke-width="1.5"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg></div><div class="quick-label">New order</div></div>
+        <div class="quick-item" onclick="openModal('modal-add-stock')"><div class="quick-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--primary-600)" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg></div><div class="quick-label">Add stock</div></div>
+        <div class="quick-item" onclick="openModal('modal-log-batch')"><div class="quick-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--primary-600)" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg></div><div class="quick-label">Log batch</div></div>
+        <div class="quick-item" onclick="showPage('page-reports')"><div class="quick-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--primary-600)" stroke-width="1.5"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></div><div class="quick-label">Reports</div></div>
+      </div>
+    </div>
+    <!-- KPIs -->
+    <div class="section">
+      <div class="section-header"><div class="section-title">KPIs</div></div>
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-label">Production today</div><div class="kpi-value" id="kpi-prod">340<span class="kpi-unit">kg</span></div><div class="badge-row"><span class="badge up"><svg width="9" height="9" viewBox="0 0 10 10"><polyline points="2,7 5,3 8,7" fill="none" stroke="var(--green-700)" stroke-width="1.8" stroke-linecap="round"/></svg>6%</span><span class="badge-sub">last week</span></div></div>
+        <div class="kpi-card"><div class="kpi-label">Orders pending</div><div class="kpi-value" id="kpi-orders">12<span class="kpi-unit">orders</span></div><div class="badge-row"><span class="badge down"><svg width="9" height="9" viewBox="0 0 10 10"><polyline points="2,3 5,7 8,3" fill="none" stroke="var(--red-700)" stroke-width="1.8" stroke-linecap="round"/></svg>3%</span><span class="badge-sub">last week</span></div></div>
+        <div class="kpi-card"><div class="kpi-label">Stock value</div><div class="kpi-value">4.2<span class="kpi-unit">k JD</span></div><div class="badge-row"><span class="badge up"><svg width="9" height="9" viewBox="0 0 10 10"><polyline points="2,7 5,3 8,7" fill="none" stroke="var(--green-700)" stroke-width="1.8" stroke-linecap="round"/></svg>2%</span><span class="badge-sub">last week</span></div></div>
+        <div class="kpi-card"><div class="kpi-label">Active batches</div><div class="kpi-value" id="kpi-batches">3<span class="kpi-unit">batches</span></div><div class="badge-row"><span class="badge neutral">—</span><span class="badge-sub">no change</span></div></div>
+      </div>
+    </div>
+    <!-- RECENT ORDERS -->
+    <div class="section">
+      <div class="section-header"><div class="section-title">Recent orders</div><div class="see-all">See all ›</div></div>
+      <div class="h-scroll" id="recentOrdersScroll">
+        <div class="order-card"><div class="order-id">#318</div><div class="order-name">Chocolate truffles</div><div class="order-footer"><span class="status-pill pending">Pending</span><span class="order-date">Today</span></div></div>
+        <div class="order-card"><div class="order-id">#317</div><div class="order-name">Baklava assorted</div><div class="order-footer"><span class="status-pill progress">In progress</span><span class="order-date">Yesterday</span></div></div>
+        <div class="order-card"><div class="order-id">#316</div><div class="order-name">Kunafa box ×12</div><div class="order-footer"><span class="status-pill done">Done</span><span class="order-date">Mar 20</span></div></div>
+      </div>
+    </div>
+    <!-- RECENT ACTIVITY -->
+    <div class="section">
+      <div class="section-header"><div class="section-title">Recent activity</div><div class="see-all">See all ›</div></div>
+      <div class="activity-list" id="activityList">
+        <div class="activity-item"><div class="act-dot" style="background:var(--primary-50)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary-600)" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div class="act-text"><div class="act-title">Stock updated — Sugar 50kg added</div><div class="act-time">5 min ago · Inventory</div></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--neutral-400)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+        <div class="activity-item"><div class="act-dot" style="background:var(--blue-50)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--blue-500)" stroke-width="1.5"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg></div><div class="act-text"><div class="act-title">Order #317 status → In progress</div><div class="act-time">1 hr ago · Orders</div></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--neutral-400)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+        <div class="activity-item"><div class="act-dot" style="background:var(--green-50)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--green-600)" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div><div class="act-text"><div class="act-title">Batch #44 completed — 80 kg yield</div><div class="act-time">3 hr ago · Production</div></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--neutral-400)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ REPORTS PAGE ═══ -->
+<div class="page" id="page-reports">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="icon-btn" onclick="showPage('page-home')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--neutral-600)" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></div>
+      <div><div class="topbar-title">Reports</div><div class="topbar-sub">This week summary</div></div>
+    </div>
+  </div>
+  <div class="scroll-area">
+    <div class="section">
+      <div class="section-header"><div class="section-title">Production</div></div>
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-label">Total yield</div><div class="kpi-value">2.1<span class="kpi-unit">t</span></div><div class="badge-row"><span class="badge up">↑ 8%</span><span class="badge-sub">last week</span></div></div>
+        <div class="kpi-card"><div class="kpi-label">Batches done</div><div class="kpi-value">14<span class="kpi-unit">batches</span></div><div class="badge-row"><span class="badge up">↑ 2</span><span class="badge-sub">last week</span></div></div>
+        <div class="kpi-card"><div class="kpi-label">Delayed</div><div class="kpi-value">2<span class="kpi-unit">batches</span></div><div class="badge-row"><span class="badge down">↑ 1</span><span class="badge-sub">last week</span></div></div>
+        <div class="kpi-card"><div class="kpi-label">Avg yield/batch</div><div class="kpi-value">150<span class="kpi-unit">kg</span></div><div class="badge-row"><span class="badge neutral">—</span><span class="badge-sub">same</span></div></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><div class="section-title">Orders</div></div>
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-label">Total orders</div><div class="kpi-value">28<span class="kpi-unit">orders</span></div><div class="badge-row"><span class="badge up">↑ 5%</span><span class="badge-sub">last week</span></div></div>
+        <div class="kpi-card"><div class="kpi-label">Fulfilled</div><div class="kpi-value">16<span class="kpi-unit">orders</span></div><div class="badge-row"><span class="badge up">↑ 3</span><span class="badge-sub">last week</span></div></div>
+        <div class="kpi-card"><div class="kpi-label">Overdue</div><div class="kpi-value">3<span class="kpi-unit">orders</span></div><div class="badge-row"><span class="badge warn">!</span><span class="badge-sub">action needed</span></div></div>
+        <div class="kpi-card"><div class="kpi-label">Revenue est.</div><div class="kpi-value">8.4<span class="kpi-unit">k JD</span></div><div class="badge-row"><span class="badge up">↑ 12%</span><span class="badge-sub">last week</span></div></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><div class="section-title">Inventory</div></div>
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-label">Items low stock</div><div class="kpi-value">2<span class="kpi-unit">items</span></div><div class="badge-row"><span class="badge down">↑ 1</span><span class="badge-sub">last week</span></div></div>
+        <div class="kpi-card"><div class="kpi-label">Stock value</div><div class="kpi-value">4.2<span class="kpi-unit">k JD</span></div><div class="badge-row"><span class="badge up">↑ 2%</span><span class="badge-sub">last week</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ NAVBAR ═══ -->
+<div class="navbar">
+  <div class="nav-item"><svg width="21" height="21" viewBox="0 0 24 24" fill="var(--primary-500)" stroke="none"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span class="nav-label active">Home</span></div>
+  <div class="nav-item"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--neutral-400)" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg><span class="nav-label">Production</span></div>
+  <div class="nav-item"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--neutral-400)" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span class="nav-label">Inventory</span></div>
+  <div class="nav-item"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--neutral-400)" stroke-width="1.5"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg><span class="nav-label">Orders</span></div>
+</div>
+
+<!-- ═══ SIDE PANEL ═══ -->
+<div class="overlay" id="overlay" onclick="closePanel()"></div>
+<div class="panel" id="panel">
+  <div class="close-x" onclick="closePanel()"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="var(--neutral-500)" stroke-width="1.5" stroke-linecap="round"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></div>
+  <div class="panel-header"><div class="panel-avatar">MO</div><div class="panel-name">Mohammad</div><div class="panel-role-txt">Production Manager</div><div class="panel-badge">Manager</div></div>
+  <div class="panel-section">
+    <div class="panel-item"><div class="panel-item-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--neutral-500)" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="panel-item-label">My account</div><div style="font-size:11px;color:var(--neutral-400);">Profile & settings</div></div></div>
+    <div class="panel-item" onclick="closePanel();showPage('page-reports')"><div class="panel-item-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--neutral-500)" stroke-width="1.5"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></div><div><div class="panel-item-label">Reports</div><div style="font-size:11px;color:var(--neutral-400);">Weekly & monthly</div></div></div>
+    <div class="panel-item" onclick="closePanel();openNotif()"><div class="panel-item-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--neutral-500)" stroke-width="1.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div><div><div class="panel-item-label">Notifications</div><div style="font-size:11px;color:var(--neutral-400);">Alerts & reminders</div></div></div>
+  </div>
+  <div class="panel-logout"><div style="display:flex;align-items:center;gap:10px;cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--red-600)" stroke-width="1.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><span style="font-size:14px;font-weight:500;color:var(--red-600);">Log out</span></div></div>
+</div>
+
+<!-- ═══ NOTIFICATIONS PANEL ═══ -->
+<div class="notif-panel" id="notifPanel">
+  <div class="topbar" style="padding-top:52px;">
+    <div style="display:flex;align-items:center;gap:12px;"><div class="icon-btn" onclick="closeNotif()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--neutral-600)" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></div><div class="topbar-title">Notifications</div></div>
+    <div style="font-size:12px;color:var(--primary-600);cursor:pointer;font-weight:500;">Mark all read</div>
+  </div>
+  <div class="scroll-area" style="padding:0 20px;">
+    <div class="notif-item"><div class="notif-dot-ind"></div><div class="notif-text"><div class="notif-title-txt">Low stock — Cocoa powder</div><div class="notif-body">Only 8 kg remaining. Minimum level is 20 kg. Consider restocking.</div><div class="notif-time">5 min ago</div></div></div>
+    <div class="notif-item"><div class="notif-dot-ind"></div><div class="notif-text"><div class="notif-title-txt">Order #318 due today</div><div class="notif-body">Order for Chocolate truffles (120 units) is due for dispatch today.</div><div class="notif-time">2 hr ago</div></div></div>
+    <div class="notif-item"><div class="notif-dot-ind read"></div><div class="notif-text"><div class="notif-title-txt">Batch #44 completed</div><div class="notif-body">Maamoul — Date batch completed with 63 kg yield (target: 60 kg).</div><div class="notif-time">3 hr ago</div></div></div>
+    <div class="notif-item"><div class="notif-dot-ind read"></div><div class="notif-text"><div class="notif-title-txt">New order received</div><div class="notif-body">Order #318 for 120 units of Chocolate truffles has been created.</div><div class="notif-time">Yesterday</div></div></div>
+    <div class="notif-item"><div class="notif-dot-ind read"></div><div class="notif-text"><div class="notif-title-txt">Stock updated</div><div class="notif-body">Sugar inventory updated. 50 kg added by Sara M.</div><div class="notif-time">Yesterday</div></div></div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: NEW ORDER ═══ -->
+<div class="modal-overlay" id="modal-new-order" onclick="handleModalClick(event,'modal-new-order')">
+  <div class="modal-sheet" id="sheet-new-order">
+    <div class="modal-handle"></div>
+    <div class="modal-title">New order</div>
+    <div class="modal-sub">Fill in the order details below</div>
+    <div class="modal-body">
+      <div class="field"><label class="field-label">Product</label><select class="field-select" id="no-product"><option value="">Select a product…</option><option>Chocolate truffles</option><option>Baklava assorted</option><option>Kunafa — Classic</option><option>Maamoul — Date</option><option>Luqaimat gift box</option><option>Halawa box — 500g</option></select></div>
+      <div class="field"><label class="field-label">Quantity</label><input class="field-input" type="number" placeholder="e.g. 50" id="no-qty" min="1"/></div>
+      <div class="field"><label class="field-label">Customer name</label><input class="field-input" type="text" placeholder="e.g. Al-Noor Bakery" id="no-customer"/></div>
+      <div class="field"><label class="field-label">Due date</label><input class="field-input" type="date" id="no-date"/></div>
+      <div class="field"><label class="field-label">Notes (optional)</label><input class="field-input" type="text" placeholder="Any special instructions…" id="no-notes"/></div>
+      <div id="no-error" style="display:none;font-size:12px;color:var(--red-600);margin-bottom:12px;padding:10px 12px;background:var(--red-50);border-radius:8px;">Please fill in all required fields.</div>
+      <button class="btn-primary" onclick="submitNewOrder()">Create order</button>
+      <button class="btn-secondary" onclick="closeModal('modal-new-order')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: ADD STOCK ═══ -->
+<div class="modal-overlay" id="modal-add-stock" onclick="handleModalClick(event,'modal-add-stock')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Add stock</div>
+    <div class="modal-sub">Update inventory levels</div>
+    <div class="modal-body">
+      <div class="field"><label class="field-label">Item</label><select class="field-select" id="as-item"><option value="">Select item…</option><option>Cocoa powder</option><option>Sugar</option><option>Semolina</option><option>Butter</option><option>Rose water</option><option>Gift boxes — large</option><option>Labels — Halwa branded</option></select></div>
+      <div class="field"><label class="field-label">Quantity</label><input class="field-input" type="number" placeholder="Amount to add" id="as-qty" min="1"/></div>
+      <div class="field"><label class="field-label">Unit</label><select class="field-select" id="as-unit"><option>kg</option><option>L</option><option>pcs</option><option>units</option></select></div>
+      <div class="field"><label class="field-label">Supplier (optional)</label><input class="field-input" type="text" placeholder="e.g. Al-Rashid Supplies" id="as-supplier"/></div>
+      <div id="as-error" style="display:none;font-size:12px;color:var(--red-600);margin-bottom:12px;padding:10px 12px;background:var(--red-50);border-radius:8px;">Please select an item and enter quantity.</div>
+      <button class="btn-primary" onclick="submitAddStock()">Update stock</button>
+      <button class="btn-secondary" onclick="closeModal('modal-add-stock')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: LOG BATCH ═══ -->
+<div class="modal-overlay" id="modal-log-batch" onclick="handleModalClick(event,'modal-log-batch')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Log batch yield</div>
+    <div class="modal-sub">Record output for an active batch</div>
+    <div class="modal-body">
+      <div class="field"><label class="field-label">Batch</label><select class="field-select" id="lb-batch"><option value="">Select batch…</option><option>Batch #47 — Chocolate Truffles</option><option>Batch #46 — Kunafa Classic</option><option>Batch #45 — Baklava Assorted</option></select></div>
+      <div class="field"><label class="field-label">Yield logged (kg)</label><input class="field-input" type="number" placeholder="e.g. 80" id="lb-yield" min="0"/></div>
+      <div class="field"><label class="field-label">Status update</label><select class="field-select" id="lb-status"><option value="active">Still active</option><option value="done">Mark as completed</option><option value="delayed">Flag as delayed</option></select></div>
+      <div class="field"><label class="field-label">Notes (optional)</label><input class="field-input" type="text" placeholder="e.g. Equipment issue at 2pm" id="lb-notes"/></div>
+      <div id="lb-error" style="display:none;font-size:12px;color:var(--red-600);margin-bottom:12px;padding:10px 12px;background:var(--red-50);border-radius:8px;">Please select a batch and enter yield.</div>
+      <button class="btn-primary" onclick="submitLogBatch()">Save log</button>
+      <button class="btn-secondary" onclick="closeModal('modal-log-batch')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toast-msg">Done!</span>
+</div>
+
+</div></div>
+
+<script>
+let alertCount = 3;
+function dismissAlert(id){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.style.transition='all .3s';
+  el.style.opacity='0';
+  el.style.maxHeight=el.offsetHeight+'px';
+  setTimeout(()=>{el.style.maxHeight='0';el.style.marginBottom='0';el.style.padding='0';},300);
+  setTimeout(()=>{el.remove();alertCount--;updateAlertCount();},600);
+}
+function updateAlertCount(){
+  const el=document.getElementById('alertCount');
+  if(alertCount>0){el.textContent=alertCount+' active · See all ›';}
+  else{el.textContent='All clear ›';document.getElementById('noAlerts').style.display='flex';}
+}
+function openPanel(){document.getElementById('panel').classList.add('open');document.getElementById('overlay').classList.add('open');}
+function closePanel(){document.getElementById('panel').classList.remove('open');document.getElementById('overlay').classList.remove('open');}
+function openNotif(){document.getElementById('notifPanel').classList.add('open');}
+function closeNotif(){document.getElementById('notifPanel').classList.remove('open');}
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+function handleModalClick(e,id){if(e.target===document.getElementById(id))closeModal(id);}
+function showToast(msg){const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');}
+function submitNewOrder(){
+  const p=document.getElementById('no-product').value;
+  const q=document.getElementById('no-qty').value;
+  const c=document.getElementById('no-customer').value;
+  const d=document.getElementById('no-date').value;
+  const err=document.getElementById('no-error');
+  if(!p||!q||!c||!d){err.style.display='block';return;}
+  err.style.display='none';
+  closeModal('modal-new-order');
+  addActivity('New order created — '+p+' ('+q+' units) for '+c,'Just now · Orders','var(--blue-50)','var(--blue-500)');
+  showToast('Order created successfully');
+  document.getElementById('no-product').value='';document.getElementById('no-qty').value='';document.getElementById('no-customer').value='';document.getElementById('no-date').value='';
+}
+function submitAddStock(){
+  const i=document.getElementById('as-item').value;
+  const q=document.getElementById('as-qty').value;
+  const u=document.getElementById('as-unit').value;
+  const err=document.getElementById('as-error');
+  if(!i||!q){err.style.display='block';return;}
+  err.style.display='none';
+  closeModal('modal-add-stock');
+  addActivity('Stock updated — '+i+' +'+q+' '+u+' added','Just now · Inventory','var(--primary-50)','var(--primary-600)');
+  showToast('Stock updated successfully');
+  document.getElementById('as-item').value='';document.getElementById('as-qty').value='';
+}
+function submitLogBatch(){
+  const b=document.getElementById('lb-batch').value;
+  const y=document.getElementById('lb-yield').value;
+  const s=document.getElementById('lb-status').value;
+  const err=document.getElementById('lb-error');
+  if(!b||!y){err.style.display='block';return;}
+  err.style.display='none';
+  closeModal('modal-log-batch');
+  const label=s==='done'?'completed':s==='delayed'?'flagged as delayed':'updated';
+  addActivity(b+' '+label+' — '+y+' kg logged','Just now · Production','var(--green-50)','var(--green-600)');
+  showToast('Batch log saved');
+  document.getElementById('lb-batch').value='';document.getElementById('lb-yield').value='';
+}
+function addActivity(title,time,bg,stroke){
+  const list=document.getElementById('activityList');
+  const div=document.createElement('div');
+  div.className='activity-item';
+  div.innerHTML=`<div class="act-dot" style="background:${bg}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="act-text"><div class="act-title">${title}</div><div class="act-time">${time}</div></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--neutral-400)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>`;
+  list.insertBefore(div,list.firstChild);
+}
+document.getElementById('avatarBtn').addEventListener('click',openPanel);
+document.getElementById('notifBtn').addEventListener('click',openNotif);
+</script>
+</body>
+</html>
