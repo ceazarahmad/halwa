@@ -118,7 +118,7 @@ body{font-family:var(--font);background:#111;display:flex;justify-content:center
 <div class="screen">
 
 <!-- ══════ 1. SPLASH ══════ -->
-<div class="auth-screen splash" id="screen-splash">
+<div class="auth-screen active splash" id="screen-splash">
   <div class="splash-logo">
     <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
       <path d="M8 28C8 18 14 10 20 8C26 10 32 18 32 28C32 32 28 34 20 34C12 34 8 32 8 28Z" fill="rgba(255,255,255,0.9)"/>
@@ -232,7 +232,7 @@ body{font-family:var(--font);background:#111;display:flex;justify-content:center
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--green-600)" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
     </div>
     <div class="auth-title" style="margin-bottom:10px;">Check your email</div>
-    <div class="auth-sub" style="margin-bottom:32px;">We sent a password reset link to <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="620311070f220a030e15034c010d0f">[email&#160;protected]</a></strong>. It expires in 30 minutes.</div>
+    <div class="auth-sub" style="margin-bottom:32px;">We sent a password reset link to <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="aacbd9cfc7eac2cbc6ddcb84c9c5c7">[email&#160;protected]</a></strong>. It expires in 30 minutes.</div>
     <button class="btn-primary" onclick="show('screen-reset-pw')" style="width:100%;margin-bottom:16px;">Open reset link</button>
     <div style="font-size:13px;color:var(--neutral-400);">Didn't receive it? <span class="auth-link">Resend</span></div>
     <div class="auth-footer"><span class="auth-link" onclick="show('screen-login')">← Back to sign in</span></div>
@@ -392,7 +392,7 @@ body{font-family:var(--font);background:#111;display:flex;justify-content:center
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--primary-600)" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
     </div>
     <div class="auth-title">Verify your email</div>
-    <div class="auth-sub">We sent a 6-digit code to <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="224351474f624a434e55430c414d4f">[email&#160;protected]</a></strong></div>
+    <div class="auth-sub">We sent a 6-digit code to <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="39584a5c54795158554e58175a5654">[email&#160;protected]</a></strong></div>
 
     <div class="otp-row">
       <input class="otp-box filled" type="text" maxlength="1" value="4"/>
@@ -422,7 +422,7 @@ body{font-family:var(--font);background:#111;display:flex;justify-content:center
 </div>
 
 <!-- ══════ 13. EMAIL ALREADY EXISTS ══════ -->
-<div class="auth-screen active" id="screen-signup-exists">
+<div class="auth-screen" id="screen-signup-exists">
   <div class="auth-inner">
     <div class="back-btn" onclick="show('screen-signup-details')">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--neutral-600)" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
@@ -463,7 +463,23 @@ body{font-family:var(--font);background:#111;display:flex;justify-content:center
 </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<!-- FLOW NAV -->
+<div style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1a1a1a;border-radius:12px;padding:10px 16px;display:flex;gap:8px;flex-wrap:wrap;max-width:420px;justify-content:center;z-index:999;">
+  <button onclick="show('screen-splash')" style="font-size:11px;padding:5px 10px;border-radius:8px;border:none;background:#333;color:#fff;cursor:pointer;font-family:var(--font);">Splash</button>
+  <button onclick="show('screen-login')" style="font-size:11px;padding:5px 10px;border-radius:8px;border:none;background:#333;color:#fff;cursor:pointer;font-family:var(--font);">Login</button>
+  <button onclick="show('screen-login-error')" style="font-size:11px;padding:5px 10px;border-radius:8px;border:none;background:#333;color:#fff;cursor:pointer;font-family:var(--font);">Wrong PW</button>
+  <button onclick="show('screen-forgot')" style="font-size:11px;padding:5px 10px;border-radius:8px;border:none;background:#333;color:#fff;cursor:pointer;font-family:var(--font);">Forgot PW</button>
+  <button onclick="show('screen-forgot-sent')" style="font-size:11px;padding:5px 10px;border-radius:8px;border:none;background:#333;color:#fff;cursor:pointer;font-family:var(--font);">Email Sent</button>
+  <button onclick="show('screen-reset-pw')" style="font-size:11px;padding:5px 10px;border-radius:8px;border:none;background:#333;color:#fff;cursor:pointer;font-family:var(--font);">Reset PW</button>
+  <button onclick="show('screen-signup-role')" style="font-size:11px;padding:5px 10px;border-radius:8px;border:none;background:#C8A97A;color:#fff;cursor:pointer;font-family:var(--font);">Signup 1</button>
+  <button onclick="show('screen-signup-details')" style="font-size:11px;padding:5px 10px;border-radius:8px;border:none;background:#C8A97A;color:#fff;cursor:pointer;font-family:var(--font);">Signup 2</button>
+  <button onclick="show('screen-signup-password')" style="font-size:11px;padding:5px 10px;border-radius:8px;border:none;background:#C8A97A;color:#fff;cursor:pointer;font-family:var(--font);">Signup 3</button>
+  <button onclick="show('screen-signup-verify')" style="font-size:11px;padding:5px 10px;border-radius:8px;border:none;background:#C8A97A;color:#fff;cursor:pointer;font-family:var(--font);">OTP</button>
+  <button onclick="show('screen-signup-exists')" style="font-size:11px;padding:5px 10px;border-radius:8px;border:none;background:#444;color:#fff;cursor:pointer;font-family:var(--font);">Exists Error</button>
+  <button onclick="show('screen-signup-success')" style="font-size:11px;padding:5px 10px;border-radius:8px;border:none;background:#16a34a;color:#fff;cursor:pointer;font-family:var(--font);">Success</button>
+</div>
+
+<script>
 function show(id){
   document.querySelectorAll('.auth-screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
